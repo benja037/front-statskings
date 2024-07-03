@@ -77,14 +77,14 @@ const Login = () => {
             <span className="text-xs text-red-600">{errors.root.message}</span>
           )}
         </form>
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <Link
             href="/auth/password/reset-password"
             className="text-sm text-blue-600 hover:underline"
           >
             Forgot password?
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
