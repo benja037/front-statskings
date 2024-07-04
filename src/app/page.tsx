@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import ClientComponent from './ClientComponent';
-import Header from './components/Header';
 import HeaderPrincipal from './components/HeaderPrincipal';
+import StickyCursor from './components/stickyCursor';
 
 export const metadata: Metadata = {
   title: 'StatsKingsFutbol',
@@ -12,8 +12,9 @@ export const metadata: Metadata = {
 
 const YourComponent = () => {
   return (
-    <div>      
+    <div>
       <HeaderPrincipal />
+      <StickyCursor stickyElementSrc="/PelotaCursor.png" />
       <ClientComponent />
     </div>
   );
