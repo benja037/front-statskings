@@ -1,17 +1,19 @@
-
-import { Metadata } from 'next'
+import { Metadata } from 'next';
 import ClientComponent from './ClientComponent';
+import Header from './components/Header';
+import HeaderPrincipal from './components/HeaderPrincipal';
 
 export const metadata: Metadata = {
   title: 'StatsKingsFutbol',
   icons: {
     icon: "/Logo.png",
   },
-}
+};
 
 const YourComponent = () => {
   return (
-    <div>
+    <div>      
+      <HeaderPrincipal />
       <ClientComponent />
     </div>
   );
