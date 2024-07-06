@@ -14,7 +14,7 @@ const navigation = [
 const ClientComponent = () => {
   return (
     <div className="relative bg-gray-900 text-white min-h-screen">    
-    <StickyCursor stickyElementSrc="/PelotaCursor.png" />
+    {/* <StickyCursor stickyElementSrc="/Pelota.png" /> */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

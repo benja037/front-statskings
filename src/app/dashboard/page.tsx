@@ -1,32 +1,48 @@
-"use client";
+'use client';
 
-import useSWR from "swr";
-import { fetcher } from "@/app/fetcher";
-import { AuthActions } from "@/app/auth/utils";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import axios from '@/lib/fetcher';
+import AuthActions from '@/lib/auth';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function Home() {
+interface User {
+  username: string;
+  email: string;
+}
+
+export default function Dashboard() {
   const router = useRouter();
+  const { logout, removeTokens } = AuthActions;
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const { data: user } = useSWR("/authenticate/users/me", fetcher);
-  const { logout, removeTokens } = AuthActions();
   useEffect(() => {
-    console.log("User data:", user);
-  }, [user]);
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get<User>('/authenticate/users/me');
+        setUser(response.data);
+        console.log('User data:', response.data);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        router.push('/auth/login');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleLogout = () => {
-    logout()
-      .res(() => {
-        removeTokens();
+    fetchUser();
+  }, [router]);
 
-        router.push("/");
-      })
-      .catch(() => {
-        removeTokens();
-        router.push("/");
-      });
+  const handleLogout = async () => {
+    await logout();
+    removeTokens();
+    router.push('/auth/login');
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 text-center">
@@ -39,11 +55,9 @@ export default function Home() {
           onClick={handleLogout}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
         >
-          Disconnect
+          Logout
         </button>
       </div>
     </div>
   );
-
-
 }
