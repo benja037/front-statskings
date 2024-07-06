@@ -8,7 +8,7 @@ import StickyCursor from './components/stickyCursor';
 const YourComponent = () => {
   return (
     <div>      
-      <StickyCursor stickyElementSrc="/PelotaCursor.png" />
+      {/* <StickyCursor stickyElementSrc="/PelotaCursor.png" /> */}
       <ClientComponent />
     </div>
   );
