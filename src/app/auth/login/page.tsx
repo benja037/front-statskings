@@ -27,8 +27,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg w-1/3">
-        <h3 className="text-2xl font-semibold">Login to your account</h3>
+      <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg w-full max-w-md">
+        <h3 className="text-2xl font-semibold text-center">Login to your account</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
           <div>
             <label className="block" htmlFor="email">Email</label>
@@ -51,7 +51,7 @@ export default function LoginPage() {
             {errors.password && <span className="text-xs text-red-600">Password is required</span>}
           </div>
           <div className="flex items-center justify-between mt-4">
-            <button className="px-12 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
+            <button className="w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
           </div>
           {errorMessage && <span className="text-xs text-red-600">{errorMessage}</span>}
         </form>
