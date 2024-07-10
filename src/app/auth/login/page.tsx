@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import AuthActions from '@/lib/auth';
+import AuthActions from '@/app/lib/auth';
 import { useState } from 'react';
 
 interface FormData {

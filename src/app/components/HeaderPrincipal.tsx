@@ -1,17 +1,16 @@
 'use client';
 import { Disclosure, Menu } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import AuthActions from '@/lib/auth';
+import AuthActions from '@/app/lib/auth';
 
 interface HeaderPrincipalProps {
   user: { email: string } | null;
 }
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', current: false },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  /* { name: 'Dashboard', href: '/dashboard', current: false }, */
+  { name: 'Torneos', href: '/torneos', current: false },
+  
 ];
 
 const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ user }) => {
