@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import api from './api';
+import api from './fetcher';
 
 export const AuthActions = {
   login: async (email: string, password: string) => {
