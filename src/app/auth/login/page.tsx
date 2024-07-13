@@ -16,9 +16,12 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log('Login button pressed'); // Añadido mensaje de consola
+    console.log('Login button pressed');
+    const emailLowerCase = data.email.toLowerCase(); // Convertir el email a minúsculas
+    console.log('Form data:', { ...data, email: emailLowerCase });
     try {
-      await AuthActions.login(data.email, data.password);
+      await AuthActions.login(emailLowerCase, data.password);
+      console.log('Login successful');
       router.push('/torneos');
     } catch (error) {
       console.error('Login error:', error);
@@ -34,7 +37,7 @@ export default function LoginPage() {
           <div>
             <label className="block" htmlFor="email">Email</label>
             <input
-              type="text"
+              type="email" // Cambiado a type="email"
               placeholder="Email"
               {...register('email', { required: true })}
               className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
@@ -52,7 +55,7 @@ export default function LoginPage() {
             {errors.password && <span className="text-xs text-red-600">Password is required</span>}
           </div>
           <div className="flex items-center justify-between mt-4">
-            <button className="w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
+            <button type="submit" className="w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
               Login
             </button>
           </div>
