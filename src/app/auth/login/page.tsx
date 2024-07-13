@@ -16,6 +16,7 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log('Login button pressed'); // Añadido mensaje de consola
     try {
       await AuthActions.login(data.email, data.password);
       router.push('/torneos');
@@ -51,7 +52,9 @@ export default function LoginPage() {
             {errors.password && <span className="text-xs text-red-600">Password is required</span>}
           </div>
           <div className="flex items-center justify-between mt-4">
-            <button className="w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
+            <button className="w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
+              Login
+            </button>
           </div>
           {errorMessage && <span className="text-xs text-red-600">{errorMessage}</span>}
         </form>
@@ -59,3 +62,4 @@ export default function LoginPage() {
     </div>
   );
 }
+  
