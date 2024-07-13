@@ -1,7 +1,7 @@
 'use client';
 
-import axios from '../../lib/fetcher';
-import AuthActions from '../../lib/auth';
+import { AuthActions } from '@/lib/auth';
+import axios from '@/lib/fetcher';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ interface User {
 
 export default function Dashboard() {
   const router = useRouter();
-  const { logout, removeTokens } = AuthActions;
+  const { logout } = AuthActions;
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +35,6 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     await logout();
-    removeTokens();
     router.push('/auth/login');
   };
 
