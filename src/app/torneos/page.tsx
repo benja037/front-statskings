@@ -1,4 +1,4 @@
-import { fetchTorneos } from '@/app/lib/data';
+import { fetchTorneos } from '../../lib/data';
 
 export default async function TorneosPage() {
   const torneos = await fetchTorneos();

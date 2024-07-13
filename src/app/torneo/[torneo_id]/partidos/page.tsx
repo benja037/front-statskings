@@ -1,4 +1,4 @@
-import { fetchPartidos } from '@/app/lib/data';
+import { fetchPartidos } from '../../../../lib/data';
 
 interface Props {
   params: { torneo_id: string };

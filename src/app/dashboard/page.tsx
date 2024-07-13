@@ -1,7 +1,7 @@
 'use client';
 
-import axios from '@/app/lib/fetcher';
-import AuthActions from '@/app/lib/auth';
+import axios from '../../lib/fetcher';
+import AuthActions from '../../lib/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

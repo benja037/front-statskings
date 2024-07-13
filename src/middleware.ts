@@ -1,32 +1,36 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken");
+const authRoutes = ['/app/*', '/account/*', '/api/*', '/admin/*', '/torneos', '/torneo/*', '/evento/*'];
 
-  // Definir rutas públicas
-  const publicPaths = ["/", "/auth/login"];
-  const pathname = request.nextUrl.pathname;
+function matchesWildcard(path: string, pattern: string): boolean {
+  if (pattern.endsWith('/*')) {
+    const basePattern = pattern.slice(0, -2);
+    return path.startsWith(basePattern);
+  }
+  return path === pattern;
+}
 
-  // Verificar si la ruta actual es pública
-  const isPublicPath = publicPaths.includes(pathname);
+export async function middleware(request: NextRequest) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  if (!baseUrl) {
+    throw new Error('NEXT_PUBLIC_BASE_URL is not set');    
+  }
 
-  //console.log("Current Pathname:", pathname);
-  //console.log("Is Public Path:", isPublicPath);
+  const LOGIN = `${baseUrl}/auth/login?redirect=${request.nextUrl.pathname + request.nextUrl.search}`;
+  const TORNEOS = `${baseUrl}/torneos`;
 
-  // Redirigir a la página de login si no tiene token y no es una ruta pública
-  if (!accessToken && !isPublicPath) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+  if (authRoutes.some(pattern => matchesWildcard(request.nextUrl.pathname, pattern))) {
+    const token = request.cookies.get('token');
+
+    if (!token) {
+      return NextResponse.redirect(LOGIN);
+    }
+  } else if (request.nextUrl.pathname === '/auth/login') {
+    const token = request.cookies.get('token');
+    if (token) {
+      return NextResponse.redirect(TORNEOS);
+    }
   }
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: [
-    // Excluir archivos estáticos y directorios
-    "/((?!api|auth|_next/static|_next/image|favicon.ico|Logo.png).*)",
-  ],
-};

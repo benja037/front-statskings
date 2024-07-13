@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import AuthActions from '@/app/lib/auth';
+import { AuthActions } from '@/lib/auth';
 import { useState } from 'react';
 
 interface FormData {
@@ -13,12 +13,12 @@ interface FormData {
 export default function LoginPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       await AuthActions.login(data.email, data.password);
-      router.push('/dashboard');
+      router.push('/torneos');
     } catch (error) {
       console.error('Login error:', error);
       setErrorMessage('Invalid email or password');

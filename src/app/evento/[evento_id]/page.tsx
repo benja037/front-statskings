@@ -1,4 +1,4 @@
-import { fetchEvento, Evento } from '@/app/lib/data';
+import { fetchEvento, Evento } from '../../../lib/data';
 
 interface Props {
   params: { evento_id: string };

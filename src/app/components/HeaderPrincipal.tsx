@@ -1,26 +1,28 @@
 'use client';
 import { Disclosure, Menu } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import AuthActions from '@/app/lib/auth';
-
-interface HeaderPrincipalProps {
-  user: { email: string } | null;
-}
+import { useEffect, useState } from 'react';
+import { AuthActions } from '@/lib/auth'; // Importa AuthActions
+import Cookies from 'js-cookie';
 
 const navigation = [
-  /* { name: 'Dashboard', href: '/dashboard', current: false }, */
   { name: 'Torneos', href: '/torneos', current: false },
-  
 ];
 
-const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ user }) => {
-  const { logout, removeTokens } = AuthActions;
+const HeaderPrincipal: React.FC = () => {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const email = Cookies.get('userEmail');
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await logout();
-      removeTokens();
-      window.location.href = '/auth/login';  // Redirigir al login manualmente después de cerrar sesión
+      await AuthActions.logout();
+      window.location.href = '/auth/login';
     } catch (error) {
       console.error('Failed to logout', error);
     }
@@ -98,7 +100,7 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ user }) => {
                       href="#"
                       className={`block px-4 py-2 text-sm ${active ? 'bg-gray-100' : 'text-gray-700'}`}
                     >
-                      {user ? `Hi, ${user.email}` : 'Loading...'}
+                      {userEmail ? `Hi, ${userEmail}` : 'Loading...'}
                     </a>
                   )}
                 </Menu.Item>
