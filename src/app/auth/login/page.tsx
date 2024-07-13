@@ -15,12 +15,9 @@ export default function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-    if (event) {
-      event.preventDefault();
-    }
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      await AuthActions.login(data.email.toLowerCase(), data.password);
+      await AuthActions.login(data.email, data.password);
       router.push('/torneos');
     } catch (error) {
       console.error('Login error:', error);
