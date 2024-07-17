@@ -33,6 +33,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         const result = await response.json();
+        // Llama a la acción del servidor para manejar el inicio de sesión
         await handleLogin(data.email.toLowerCase(), result.access, result.refresh);
         router.push('/torneos');
       } else {

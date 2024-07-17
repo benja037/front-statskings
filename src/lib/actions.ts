@@ -45,26 +45,26 @@ export async function handleRefresh() {
 
 export async function handleLogin(userId: string, accessToken: string, refreshToken: string) {
     cookies().set('session_userid', userId, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 60 * 60 * 24 * 7, // One week
-        path: '/'
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60 * 24 * 7, // One week
+      path: '/'
     });
-
+  
     cookies().set('session_access_token', accessToken, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 60 * 60, // 60 minutes
-        path: '/'
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60, // 60 minutes
+      path: '/'
     });
-
+  
     cookies().set('session_refresh_token', refreshToken, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 60 * 60 * 24 * 7, // One week
-        path: '/'
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60 * 24 * 7, // One week
+      path: '/'
     });
-}
+  }
 
 export async function resetAuthCookies() {
     cookies().set('session_userid', '');
