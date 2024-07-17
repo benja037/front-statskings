@@ -1,9 +1,10 @@
+// src/app/auth/login/page.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useState } from 'react';
 import { handleLogin } from '@/lib/actions';
+import { useState } from 'react';
 
 interface FormData {
   email: string;
@@ -15,33 +16,34 @@ export default function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-    event?.preventDefault(); // Prevent default form submission
-    console.log("Login button pressed");
-    console.log("Form data: ", data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log('Login button pressed');
     try {
       const response = await fetch('https://apistatskingsfutbol.up.railway.app/authenticate/jwt/create/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify({
-          username: data.email.toLowerCase(),
+          username: data.email,
           password: data.password
-        })
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
       });
 
+      const json = await response.json();
+
       if (response.ok) {
-        const result = await response.json();
-        // Llama a la acción del servidor para manejar el inicio de sesión
-        await handleLogin(data.email.toLowerCase(), result.access, result.refresh);
+        console.log('Login successful', json);
+        await handleLogin(data.email, json.access, json.refresh);
         router.push('/torneos');
       } else {
+        console.error('Login error:', json);
         setErrorMessage('Invalid email or password');
       }
     } catch (error) {
       console.error('Login error:', error);
-      setErrorMessage('Something went wrong');
+      setErrorMessage('An unexpected error occurred');
     }
   };
 

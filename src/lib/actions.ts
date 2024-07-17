@@ -1,3 +1,4 @@
+// src/app/lib/actions.ts
 'use server';
 
 import { cookies } from 'next/headers';
@@ -24,7 +25,7 @@ export async function handleRefresh() {
             if (json.access) {
                 cookies().set('session_access_token', json.access, {
                     httpOnly: true,
-                    secure: true,
+                    secure: false,
                     maxAge: 60 * 60, // 60 minutes
                     path: '/'
                 });
@@ -38,38 +39,53 @@ export async function handleRefresh() {
             console.log('error', error);
 
             resetAuthCookies();
-        })
+        });
 
     return token;
 }
 
 export async function handleLogin(userId: string, accessToken: string, refreshToken: string) {
     cookies().set('session_userid', userId, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 24 * 7, // One week
-      path: '/'
+        httpOnly: true,
+        secure: false,
+        maxAge: 60 * 60 * 24 * 7, // One week
+        path: '/'
     });
-  
+
     cookies().set('session_access_token', accessToken, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60, // 60 minutes
-      path: '/'
+        httpOnly: true,
+        secure: false,
+        maxAge: 60 * 60, // 60 minutes
+        path: '/'
     });
-  
+
     cookies().set('session_refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 24 * 7, // One week
-      path: '/'
+        httpOnly: true,
+        secure: false,
+        maxAge: 60 * 60 * 24 * 7, // One week
+        path: '/'
     });
-  }
+}
 
 export async function resetAuthCookies() {
-    cookies().set('session_userid', '');
-    cookies().set('session_access_token', '');
-    cookies().set('session_refresh_token', '');
+    cookies().set('session_userid', '', {
+        httpOnly: true,
+        secure: false,
+        maxAge: -1,
+        path: '/'
+    });
+    cookies().set('session_access_token', '', {
+        httpOnly: true,
+        secure: false,
+        maxAge: -1,
+        path: '/'
+    });
+    cookies().set('session_refresh_token', '', {
+        httpOnly: true,
+        secure: false,
+        maxAge: -1,
+        path: '/'
+    });
 }
 
 export async function getUserId() {
@@ -88,7 +104,6 @@ export async function getAccessToken() {
 }
 
 export async function getRefreshToken() {
-    let refreshToken = cookies().get('session_refresh_token')?.value;
-
-    return refreshToken;
+    const refreshToken = cookies().get('session_refresh_token')?.value;
+    return refreshToken ? refreshToken : null;
 }
