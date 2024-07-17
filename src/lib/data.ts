@@ -18,7 +18,10 @@ export interface Partido {
 export interface Evento {
   equipo_local: string;
   equipo_visitante: string;
-  sofascore_stats: SofascoreStat[];
+  puntuacion_local: number;
+  puntuacion_visitante: number;
+  sofascore_stats_local: SofascoreStat[];
+  sofascore_stats_visitante: SofascoreStat[];
   fbref_stats: FbrefStat[];
 }
 
