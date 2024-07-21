@@ -22,7 +22,7 @@ export default function LoginPage() {
       const response = await fetch('https://apistatskingsfutbol.up.railway.app/authenticate/jwt/create/', {
         method: 'POST',
         body: JSON.stringify({
-          username: data.email,
+          username: data.email.toLowerCase(), // Convert email to lowercase
           password: data.password
         }),
         headers: {
@@ -35,7 +35,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         console.log('Login successful', json);
-        await handleLogin(data.email, json.access, json.refresh);
+        await handleLogin(data.email.toLowerCase(), json.access, json.refresh);
         router.push('/torneos');
       } else {
         console.error('Login error:', json);
