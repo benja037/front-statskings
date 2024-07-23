@@ -1,3 +1,4 @@
+// src/lib/data.ts
 import api from './fetcher';
 
 export interface Torneo {
@@ -14,24 +15,21 @@ export interface Partido {
   ronda: string;
 }
 
-
 export interface Evento {
   equipo_local: string;
   equipo_visitante: string;
   puntuacion_local: number;
   puntuacion_visitante: number;
-  sofascore_stats_local: SofascoreStat[];
-  sofascore_stats_visitante: SofascoreStat[];
-  fbref_stats: FbrefStat[];
+  combinated_stats_local: CombinedStat[];
+  combinated_stats_visitante: CombinedStat[];
 }
 
 export interface Player {
   nombre: string;
 }
 
-export interface SofascoreStat {
-  id: number;
-  player: Player;
+export interface CombinedStat {
+  player: string;
   numero_camiseta: number;
   suplente: boolean;
   total_pases: number;
@@ -82,13 +80,28 @@ export interface SofascoreStat {
   punches: number;
   good_high_claim: number;
   goals_prevented: number;
-}
-
-
-export interface FbrefStat {
-  id: number;
-  player: Player;
+  Min: number;
   Gls: number;
+  Ast: number;
+  Sh: number;
+  SoT: number;
+  CrdY: number;
+  CrdR: number;
+  Fls: number;
+  Fld: number;
+  Off: number;
+  Crs: number;
+  TklW: number;
+  Int: number;
+  OG: number;
+  PKatt: number;
+  PKwon: number | null;
+  PK: number;
+  PKcon: number | null;
+  Pos: string;
+  edad_dia_partido: string;
+  nation: string;
+  fbref_player_id: string;
 }
 
 export async function fetchTorneos() {
@@ -103,5 +116,6 @@ export async function fetchPartidos(torneo_id: string) {
 
 export async function fetchEvento(evento_id: string) {
   const response = await api.get<Evento>(`/stats/evento/${evento_id}/`);
+  console.log(response.data)
   return response.data;
 }

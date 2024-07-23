@@ -8,7 +8,7 @@ interface Props {
 
 export default async function EventoPage({ params }: Props) {
   const { evento_id } = params;
-  const evento = await fetchEvento(evento_id);
+  const evento: Evento = await fetchEvento(evento_id);
 
   return (
     <main className="min-h-screen bg-gray-100 py-8">
@@ -19,8 +19,8 @@ export default async function EventoPage({ params }: Props) {
         <p className="text-lg mb-4">
           Resultado: {evento.puntuacion_local} - {evento.puntuacion_visitante}
         </p>
-        <EventoTable stats={evento.sofascore_stats_local} />
-        <EventoTable stats={evento.sofascore_stats_visitante} />
+        <EventoTable stats={evento.combinated_stats_local} />
+        <EventoTable stats={evento.combinated_stats_visitante} />
       </div>
     </main>
   );

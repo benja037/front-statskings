@@ -15,9 +15,19 @@ const EventoTable: React.FC<EventoTableProps> = ({ stats }) => {
   };
 
   const renderPlayerStats = (stats: any[]) => {
+    if (!stats || stats.length === 0) {
+      return (
+        <tr>
+          <td colSpan={56} className="text-center py-2 px-4 border-b border-gray-200">
+            No data available
+          </td>
+        </tr>
+      );
+    }
+
     return stats.map((stat) => (
-      <tr key={stat.id} className="hover:bg-gray-100" style={{ fontSize: `${tableSize}%` }}>
-        <td className="py-2 px-4 border-b border-gray-200 sticky left-0 bg-white z-10">{stat.player.nombre}</td>
+      <tr key={stat.player.nombre} className="hover:bg-gray-100" style={{ fontSize: `${tableSize}%` }}>
+        <td className="py-2 px-4 border-b border-gray-200 sticky left-0 bg-white z-10">{stat.player}</td>
         <td className="py-2 px-4 border-b border-gray-200">{stat.numero_camiseta}</td>
         <td className="py-2 px-4 border-b border-gray-200">{stat.minutos_jugados}</td>
         <td className="py-2 px-4 border-b border-gray-200">{stat.goles}</td>
@@ -63,6 +73,28 @@ const EventoTable: React.FC<EventoTableProps> = ({ stats }) => {
         <td className="py-2 px-4 border-b border-gray-200">{stat.punches}</td>
         <td className="py-2 px-4 border-b border-gray-200">{stat.good_high_claim}</td>
         <td className="py-2 px-4 border-b border-gray-200">{stat.goals_prevented}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Min}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Gls}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Ast}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Sh}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.SoT}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.CrdY}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.CrdR}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Fls}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Fld}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Off}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Crs}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.TklW}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Int}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.OG}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.PKatt}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.PKwon}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.PK}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.PKcon}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.Pos}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.edad_dia_partido}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.nation}</td>
+        <td className="py-2 px-4 border-b border-gray-200">{stat.fbref_player_id}</td>
       </tr>
     ));
   };
@@ -132,6 +164,28 @@ const EventoTable: React.FC<EventoTableProps> = ({ stats }) => {
               <th className="py-2 px-4 border-b border-gray-200">Punches</th>
               <th className="py-2 px-4 border-b border-gray-200">Good High Claim</th>
               <th className="py-2 px-4 border-b border-gray-200">Goals Prevented</th>
+              <th className="py-2 px-4 border-b border-gray-200">Min</th>
+              <th className="py-2 px-4 border-b border-gray-200">Gls</th>
+              <th className="py-2 px-4 border-b border-gray-200">Ast</th>
+              <th className="py-2 px-4 border-b border-gray-200">Sh</th>
+              <th className="py-2 px-4 border-b border-gray-200">SoT</th>
+              <th className="py-2 px-4 border-b border-gray-200">CrdY</th>
+              <th className="py-2 px-4 border-b border-gray-200">CrdR</th>
+              <th className="py-2 px-4 border-b border-gray-200">Fls</th>
+              <th className="py-2 px-4 border-b border-gray-200">Fld</th>
+              <th className="py-2 px-4 border-b border-gray-200">Off</th>
+              <th className="py-2 px-4 border-b border-gray-200">Crs</th>
+              <th className="py-2 px-4 border-b border-gray-200">TklW</th>
+              <th className="py-2 px-4 border-b border-gray-200">Int</th>
+              <th className="py-2 px-4 border-b border-gray-200">OG</th>
+              <th className="py-2 px-4 border-b border-gray-200">PKatt</th>
+              <th className="py-2 px-4 border-b border-gray-200">PKwon</th>
+              <th className="py-2 px-4 border-b border-gray-200">PK</th>
+              <th className="py-2 px-4 border-b border-gray-200">PKcon</th>
+              <th className="py-2 px-4 border-b border-gray-200">Pos</th>
+              <th className="py-2 px-4 border-b border-gray-200">edad_dia_partido</th>
+              <th className="py-2 px-4 border-b border-gray-200">nation</th>
+              <th className="py-2 px-4 border-b border-gray-200">fbref_player_id</th>
             </tr>
           </thead>
           <tbody>
